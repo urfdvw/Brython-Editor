@@ -8,8 +8,10 @@
         - branch
         - loop
     - data
-        - containers
-            - variable
+        - variable
+            - string
+            - int
+            - float
             - list
             - dictionary
         - CRUD
