@@ -2,7 +2,7 @@
 pi = 3.1415926
 # Input the shape
 shape = input("What is the shape, input \"circle\" or \"square\": ")
-# If logic, to display different info in the next `input()`
+# If logic, decide the name of length
 if shape == "circle":
     measure = "radius"
 elif shape == "square":
@@ -19,5 +19,11 @@ if shape == "circle":
 else:
     area = length ** 2
 # display result
-info = "The area of " + shape + " with " + measure + " equal to " + str(length) + " is " + str(area)
-print(info)
+print("The area of",
+     shape,
+     "with",
+     measure,
+     "equal to",
+     length,
+     "is",
+     area)
