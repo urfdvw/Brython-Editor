@@ -16,11 +16,14 @@
             - dictionary
         - CRUD
         - I/O
-- Putting together
+- encapsulation and sharing
     - function: process
     - objects: data and process
     - modules: code sharing
     - GUI: deliverable
+    
+- syntax: executable by computer
+- coding style: readable by human
 
 # Key Points by days
 Day 1
@@ -51,17 +54,17 @@ Day 2
 
 Day 3
 - Dictionary (data)
-- Function (Putting together)
+- Function (sharing code)
 - Procedural programming (general)
 
 Day 4
 - OOP (general)
-    - objects (Putting together)
-    - class (Putting together)
+    - objects (encapsulation)
+    - class (sharing object design)
 - module (Putting together)
 
 Day 5
-- GUI (Putting together)
+- GUI (sharing deliverable)
 - (Optional) Distribute your website
 
 # Things need to be changed
