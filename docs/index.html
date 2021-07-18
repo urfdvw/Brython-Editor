@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <head>
+        <style>
+            body {
+                color: rgb(248, 248, 242);
+                background-color: rgb(39, 40, 34);
+            }
+
+            .row {
+                display: flex;
+            }
+
+            .column {
+                flex: 50%;
+            }
+
+            .head {
+                height: 50px;
+            }
+
+            .toolbar {
+                height: 20px;
+            }
+
+            .content {
+                height: calc(100vh - 20px - 50px - 40px - 20px);
+                overflow-y: scroll;
+                border: 1px solid grey;
+            }
+
+            .tail {
+                height: 20px;
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+        </link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+        </link>
+        <link rel="stylesheet" href="https://codemirror.net/addon/hint/show-hint.css">
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+        <script type="text/javascript" src="https://codemirror.net/mode/python/python.js"></script>
+        <script type="text/javascript" src="https://codemirror.net/mode/xml/xml.js"></script>
+        <script type="text/javascript" src="https://codemirror.net/addon/comment/comment.js"></script>
+
+    </head>
+</head>
+
+<body>
+    <div class="head">
+        <h1> Brython Online Editor
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="column toolbar">
+            Body Html
+            <button id="run"> Run </button>
+            <button id="save"> Save </button>
+        </div>
+        <div class="column toolbar">
+            Python
+            <button style="float: right;">
+                IDE Help
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column content">
+            <div id="html_editor">
+            </div>
+        </div>
+        <div class="column content">
+            <div id="python_editor">
+            </div>
+        </div>
+    </div>
+
+    <div class="row tail">
+        Examples:
+    </div>
+
+    <script type="text/javascript" src="code.js">
+    </script>
+</body>
+
+</html>
