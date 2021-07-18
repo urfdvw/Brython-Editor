@@ -12,7 +12,7 @@ var html_editor = CodeMirror(document.querySelector('#html_editor'), {
     value: "<h1 id='text'></h1>",
     tabSize: 4,
     indentUnit: 4,
-    mode : "xml",
+    mode: "xml",
     htmlMode: true,
     theme: 'monokai',
     extraKeys: {
@@ -50,19 +50,23 @@ function betterTab(cm) {
  * running app
  */
 
-function get_html(){
+function get_html(page) {
     html = "<!doctype html>"
-    + '<html>\n'
-    + '<head>\n'
-    + '<meta charset="utf-8">\n'
-    + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>\n'
-    + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>\n'
-    + '</head>\n'
-    + '<body onpageshow="brython(1)">\n'
+        + '<html>\n'
+        + '<head>\n'
+        + '<meta charset="utf-8">\n'
+        + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>\n'
+        + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>\n'
+        + '</head>\n'
+        + '<body onpageshow="brython(1)">\n'
     html += html_editor.getValue() + '\n'
     html += '<script type="text/python">\n'
     html += python_editor.getValue() + '\n'
-    html += '</script>\n</body>\n</html>\n'
+    html += '</script>\n'
+    if (page) {
+        html += '<script> brython(1) </script>'
+    }
+    html += '</body>\n</html>\n'
     return html
 }
 
@@ -77,5 +81,5 @@ window.addEventListener("beforeunload", function (e) {
 // create new window and set style
 function new_tab() {
     app_window = window.open()
-    app_window.document.write(get_html())
+    app_window.document.write(get_html(true))
 }
