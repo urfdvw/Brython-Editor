@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>
+</head>
+
+<body onload="brython(1)">
+    shape:
+    <select id="shape">
+        <option value="triangle">triangle</option>
+        <option value="square">square</option>
+    </select>
+    <br>
+    length of edge:
+    <input id="length">
+    <br>
+    <button id="calculate">calculate area</button>
+    <br>
+    area:
+    <text id="area"></text>
+<script type="text/python">
+from browser import document
+
+def calculate_area(event):
+    multiplier = {
+        "triangle": 0.433,
+        "square": 1.0,
+    }
+
+    shape = document["shape"].value
+    length = float(document["length"].value)
+    document["area"].textContent = length ** 2 * multiplier[shape]
+    
+document["calculate"].bind("click", calculate_area)
+</script>
+</body>
+
+</html>
