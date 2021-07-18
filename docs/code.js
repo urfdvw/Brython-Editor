@@ -58,10 +58,10 @@ function get_html(page) {
         + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>\n'
         + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>\n'
         + '</head>\n'
-        + '<body onpageshow="brython(1)">\n'
-    html += html_editor.getValue() + '\n'
-    html += '<script type="text/python">\n'
-    html += python_editor.getValue() + '\n'
+        + '<body onpageshow="brython(1)">\n\n'
+    html += html_editor.getValue() + '\n\n'
+    html += '<script type="text/python">\n\n'
+    html += python_editor.getValue() + '\n\n'
     html += '</script>\n'
     if (page) {
         html += '<script> brython(1) </script>'
@@ -79,7 +79,35 @@ window.addEventListener("beforeunload", function (e) {
 }, false);
 
 // create new window and set style
-function new_tab() {
+function run_app_page() {
     app_window = window.open()
     app_window.document.write(get_html(true))
+}
+
+/**
+ * Saving app
+ */
+
+ function download(data, filename, type) {
+    // Function to download data to a file
+    console.log(data)
+    var file = new Blob([data], { type: type });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
+
+function download_app_page() {
+    download(get_html(false), 'index.html', 'text')
 }
