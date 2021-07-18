@@ -27,14 +27,15 @@
             }
 
             .content {
-                height: calc(100vh - 20px - 50px - 40px - 20px);
+                /* height: calc(100vh - 20px - 50px - 40px - 20px); */
+                height: calc(100vh - 20px - 50px - 40px);
                 overflow-y: scroll;
                 border: 1px solid grey;
             }
 
-            .tail {
+            /* .tail {
                 height: 20px;
-            }
+            } */
         </style>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
@@ -60,8 +61,12 @@
     <div class="row">
         <div class="column toolbar">
             Body Html
+            
+            <button id="inputfile"> Open </button>
+            <text id="filename"></text>
+            <button id="save" onClick='save_to_file()'> Save </button>
             <button id="run" onclick="run_app_page()"> Run </button>
-            <button id="save" onclick="download_app_page()"> Save </button>
+            <button id="save" onclick="download_app_page()"> Save As </button>
         </div>
         <div class="column toolbar">
             Python
@@ -80,11 +85,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row tail">
-        Examples:
-    </div>
-
     <script type="text/javascript" src="code.js">
     </script>
 </body>

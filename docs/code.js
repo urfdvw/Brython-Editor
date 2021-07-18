@@ -60,10 +60,10 @@ function get_html(page) {
         + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>\n'
         + '<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>\n'
         + '</head>\n'
-        + '<body onpageshow="brython(1)">\n\n'
-    html += html_editor.getValue() + '\n\n'
-    html += '<script type="text/python">\n\n'
-    html += python_editor.getValue() + '\n\n'
+        + '<body onload="brython(1)">\n'
+    html += html_editor.getValue() + '\n'
+    html += '<script type="text/python">\n'
+    html += python_editor.getValue() + '\n'
     html += '</script>\n'
     if (page) {
         html += '<script> brython(1) </script>'
@@ -90,8 +90,34 @@ function run_app_page() {
 }
 
 /**
- * Saving app
+ * file related
  */
+let fileHandle;
+var butOpenFile = document.getElementById("inputfile")
+butOpenFile.addEventListener('click', async () => {
+        [fileHandle] = await window.showOpenFilePicker();
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        // console.log(contents)
+        html_editor.setValue(contents.split('<body onload="brython(1)">')[1].split('<script type="text/python">')[0].trim())
+        python_editor.setValue(contents.split('<script type="text/python">')[1].split('</script>')[0].trim())
+        document.getElementById('filename').innerHTML = fileHandle.name;
+        document.title = fileHandle.name
+});
+
+async function writeFile(fileHandle, contents) {
+    // Create a FileSystemWritableFileStream to write to.
+    const writable = await fileHandle.createWritable();
+    // Write the contents of the file to the stream.
+    await writable.write(contents);
+    // Close the file and write the contents to disk.
+    await writable.close();
+}
+
+
+function save_to_file() {
+    writeFile(fileHandle, get_html(false));
+}
 
 function download(data, filename, type) {
     // Function to download data to a file

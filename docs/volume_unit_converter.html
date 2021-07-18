@@ -1,0 +1,84 @@
+<!doctype html><html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>
+</head>
+<body onload="brython(1)">
+<p>Volume Unit Converter</p>
+Original Unit: <input id="original_unit" value="pint"></input><br>
+Original value: <input id="original_value" value="1"></input><br>
+target unit: <input id="target_unit" value="liter"></input><br>
+<button id="calculate">Calculate</button>
+<p id="info"></p>
+<pre id="hist"></pre>
+<script type="text/python">
+from browser import document
+
+class VolumeUnitConverter:
+    # convertion ration to milliliter, stored in dict
+    ml_per_unit = {
+        "minim": 61.611519921875e-6,
+        "dram": 3.6966911953125,
+        "teaspoon": 4.92892159375,
+        "tablespoon": 14.78676478125,
+        "ounce": 29.5735295625,
+        "shot": 44.36029434375,
+        "gill": 118.29411825,
+        "cup": 236.5882365,
+        "pint": 473.176473,
+        "quart": 0.946352946e3,
+        "pottle": 1.892705892e3,
+        "gallon": 3.785411784e3,
+        "liter": 1e3,
+        "milliliter": 1.0,
+    }
+    # record convertion history
+    history = []
+
+    # initialization function
+    def __init__(self, original_unit, target_unit):
+        # add attributes to the current object
+        self.original_unit = original_unit
+        self.target_unit = target_unit
+    
+    # convertion funcrtion
+    def convert(self, original_value):
+        # covert the volume from original_unit to ml
+        vol_in_ml = original_value * self.ml_per_unit[self.original_unit]
+        # covert the volume from ml to target_unit
+        target_value = vol_in_ml / self.ml_per_unit[self.target_unit]
+        # record history
+        self.history.append(str(original_value) + self.original_unit
+                    + 's = ' + str(target_value)
+                    + self.target_unit + 's')
+        # return the result
+        return target_value
+    
+    # print the history
+    def print_history(self):
+        print("Here is the convertion history")
+        # add information 
+        for i in range(len(self.history)):
+            print(i+1, ',', self.history[i])
+        # no return needed
+
+converter = VolumeUnitConverter('pint', 'ounce')
+
+# UI related function
+def change_unit(event):
+    converter.original_unit = document['original_unit'].value
+    converter.target_unit = document['target_unit'].value
+
+document["original_unit"].bind("change", change_unit)
+document["target_unit"].bind("change", change_unit)
+
+def calculate(event):
+    target_value = converter.convert(float(document["original_value"].value))
+    document["info"].textContent = str(target_value) + ' ' + document["target_unit"].value + 's'
+    document["hist"].textContent = '\n'.join(converter.history)
+
+document["calculate"].bind("click", calculate)
+</script>
+</body>
+</html>
