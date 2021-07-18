@@ -5,19 +5,14 @@
 <script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>
 </head>
 <body onload="brython(1)">
-shape:
+shape: 
 <select id="shape">
     <option value="triangle">triangle</option>
     <option value="square">square</option>
-</select>
-<br>
-length of edge:
-<input id="length">
-<br>
-<button id="calculate">calculate area</button>
-<br>
-area:
-<text id="area"></text>
+</select><br>
+length of edge: <input id="length" value="10"><br>
+<button id="calculate">calculate area</button><br>
+area: <text id="area"></text>
 <script type="text/python">
 from browser import document
 
