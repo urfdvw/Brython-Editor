@@ -17,6 +17,7 @@ var html_editor = CodeMirror(document.querySelector('#html_editor'), {
     theme: 'monokai',
     extraKeys: {
         Tab: betterTab,
+        "Ctrl-/": 'toggleComment',
     },
 });
 
@@ -31,6 +32,7 @@ var python_editor = CodeMirror(document.querySelector('#python_editor'), {
     theme: 'monokai',
     extraKeys: {
         Tab: betterTab,
+        "Ctrl-/": 'toggleComment',
     },
 });
 
@@ -80,6 +82,9 @@ window.addEventListener("beforeunload", function (e) {
 
 // create new window and set style
 function run_app_page() {
+    if (app_window) {
+        app_window.close()
+    }
     app_window = window.open()
     app_window.document.write(get_html(true))
 }
@@ -88,7 +93,7 @@ function run_app_page() {
  * Saving app
  */
 
- function download(data, filename, type) {
+function download(data, filename, type) {
     // Function to download data to a file
     console.log(data)
     var file = new Blob([data], { type: type });
