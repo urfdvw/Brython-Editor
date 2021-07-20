@@ -1,0 +1,91 @@
+<!doctype html><html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython.js"></script>
+<script type="text/javascript" src="https://raw.githack.com/brython-dev/brython/master/www/src/brython_stdlib.js"></script>
+</head>
+<body onload="brython(1)">
+<h1>Guess Number Game</h1>
+<input id='guess' value="1234"><br>
+<button id='submit'>Submit</button>
+<pre id='history'>history:</pre><br>
+<button id='new'>New Game</button>
+<script type="text/python">
+from browser import document
+from browser.widgets.dialog import InfoDialog
+from random import shuffle
+
+class GuessNumber:
+    
+    def __init__(self):
+        self.history = []
+        self.answer = []
+        for i in range(10):
+            self.answer.append(i)
+        shuffle(self.answer)
+        del self.answer[4:]
+        print(self.answer) # cheating, for developer
+    
+    def compare_a(self, guess):
+        """
+        guess: str
+        return: int: number of correct numbers in correct position
+        """
+        counter = 0
+        for i in range(4):
+            if self.answer[i] == int(guess[i]):
+                counter += 1
+        return counter
+    
+    def compare_b(self, guess):
+        """
+        guess: str
+        return: int: number of correct numbers in wrong position
+        """
+        counter = 0
+        for i in range(4):
+            if int(guess[i]) in self.answer and self.answer[i] != int(guess[i]):
+                counter += 1
+        return counter
+    
+    def compare(self, guess):
+        """
+        guess: str
+        """
+        info = str(self.compare_a(guess)) + "A" + str(self.compare_b(guess)) + "B"
+        self.history.append([guess, info])
+        return info
+        
+    def history_str(self):
+        """
+        return: str: history nicer format
+        """
+        info = "history:\n"
+        for i in range(len(self.history)):
+            info += str(i+1) + ": " + self.history[i][0] + ", " + self.history[i][1] + '\n'
+        return info
+    
+# the following are the code about the GUI
+
+game = GuessNumber()
+
+def new(event):
+    document['guess'].value = '1234'
+    game.__init__()
+    document['history'].textContent =  game.history_str()
+document["new"].bind("click", new)
+
+def submit(event):
+    if game.compare_a(document['guess'].value) == 4:
+        InfoDialog('o(*￣▽￣*)o', 'You Win!')
+        new(None)
+    else:
+        game.compare(document['guess'].value)
+        document['history'].textContent = game.history_str()
+        if len(game.history) == 10:
+            InfoDialog('╮(╯▽╰)╭', 'You Lose. The answer is: ' + str(game.answer))
+            new(None)
+document["submit"].bind("click", submit)
+</script>
+</body>
+</html>
