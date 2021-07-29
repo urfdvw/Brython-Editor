@@ -9,22 +9,26 @@ shape:
 <select id="shape">
     <option value="triangle">triangle</option>
     <option value="square">square</option>
+    <option value="pentagon">pentagon</option>
+    <option value="circle">circle</option>
 </select><br>
-length of edge: <input id="length" value="10"><br>
+length of edge or radius: <input id="length" value="10"><br>
 <button id="calculate">calculate area</button><br>
 area: <text id="area"></text>
 <script type="text/python">
 from browser import document
 
-def calculate_area(event):
-    multiplier = {
-        "triangle": 0.433,
-        "square": 1.0,
+def calculate_area(event): 
+    ratio = {
+        'square': 1,
+        'triangle': 0.433,
+        'pentagon': 1.72,
+        'circle': 3.1415927,
     }
 
     shape = document["shape"].value
     length = float(document["length"].value)
-    document["area"].textContent = length ** 2 * multiplier[shape]
+    document["area"].textContent = length ** 2 * ratio[shape]
     
 document["calculate"].bind("click", calculate_area)
 </script>
